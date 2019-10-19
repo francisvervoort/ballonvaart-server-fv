@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js dev
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add cross_env -D
 
 PATH: 
   C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Belgium Identity Card;C:\Program Files (x86)\B1 Free Archiver;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files (x86)\Windows Live\Shared;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Users\Francis Vervoort\AppData\Local\Microsoft\WindowsApps;C:\Users\Francis Vervoort\AppData\Local\atom\bin;C:\Users\Francis Vervoort\AppData\Local\Microsoft\WindowsApps;;C:\Users\Francis Vervoort\Documents\a_javascript_01_2018\Microsoft VS Code\bin;C:\Users\Francis Vervoort\AppData\Roaming\npm;C:\Users\Francis Vervoort\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Francis Vervoort\AppData\Local\Yarn\bin
@@ -14,12 +14,17 @@ Platform:
   win32 x64
 
 Trace: 
-  SyntaxError: C:\Users\Francis Vervoort\Documents\a__vue_mongo2019\ballonvaart-server-fv\package.json: Unexpected token / in JSON at position 217
-      at JSON.parse (<anonymous>)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:1625:59
-      at Generator.next (<anonymous>)
-      at step (C:\Program Files (x86)\Yarn\lib\cli.js:304:30)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:315:13
+  Error: https://registry.yarnpkg.com/cross_env: Not found
+      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66035:18)
+      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140564:22)
+      at Request.emit (events.js:182:13)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141536:10)
+      at Request.emit (events.js:182:13)
+      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141458:12)
+      at Object.onceWrapper (events.js:273:13)
+      at IncomingMessage.emit (events.js:187:15)
+      at endReadableNT (_stream_readable.js:1094:12)
+      at process._tickCallback (internal/process/next_tick.js:63:19)
 
 npm manifest: 
   {
@@ -28,13 +33,15 @@ npm manifest:
     "description": "Back-end voor ballonvaart project",
     "main": "server.js",
     "scripts": {
-      "dev": "nodemon server.js",
-      "start": "node server.js"     // voor veel later, als we in production zitten. start kan iets anders zijn. 
+      "dev": "NODE_ENV=development nodemon server.js",
+      "start": "NODE-ENV=production node server.js"
     },
     "author": "F Vervoort",
     "license": "ISC",
     "dependencies": {
       "cors": "^2.8.5",
+      "dotenv": "^8.2.0",
+      "dotenv-flow": "^3.1.0",
       "express": "^4.17.1",
       "mongoose": "^5.7.4"
     },
@@ -629,6 +636,18 @@ Lockfile:
     integrity sha512-tUMXrxlExSW6U2EXiiKGSBVdYgtV8qlHL+C10TsW4PURY/ic+eaysnSkwB4kA/mBlCyy/IKDJ+Lc3wbWeaXtuQ==
     dependencies:
       is-obj "^1.0.0"
+  
+  dotenv-flow@^3.1.0:
+    version "3.1.0"
+    resolved "https://registry.yarnpkg.com/dotenv-flow/-/dotenv-flow-3.1.0.tgz#2abcb4661cf2d0ca5b46d8ff5e95c1045ade9938"
+    integrity sha512-BMA8vfu2DbAx5x5G3C+tgb1hCbONggZTSpBE7B4yCPG5vziKX/lA3CzsjdGKlPvLxZgTbP1qb+KlWux8pYqsmA==
+    dependencies:
+      dotenv "^8.0.0"
+  
+  dotenv@^8.0.0, dotenv@^8.2.0:
+    version "8.2.0"
+    resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
+    integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
   
   duplexer3@^0.1.4:
     version "0.1.4"
