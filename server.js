@@ -16,7 +16,7 @@ require ("./config/mongoose");
 // const router = require("./app/boekingen/router"); idem voor gebruikers, vaarten, ... , dus zou veel lijnen kunnen geven
 //app.use("/ballonnen", router);  is van vroeger
 require("./app")(app) 
-const port = 7000;
+const port = process.env.PORT || 7000;
 
 app.use((req, res) => {
     return res.status(404).send ("Bron niet gevonden");
