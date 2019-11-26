@@ -7,7 +7,7 @@ exports.list = async (req, res) => {
   } catch (err) {
     return res.status(500).send("Serverfout");
   }
-}
+};
 
 exports.create = async (req, res) => {
   const data = req.body;
@@ -19,7 +19,7 @@ exports.create = async (req, res) => {
   } catch (err) {
     return res.status(500).send("Toevoegen van bericht mislukt!");
   }
-}
+};
 
 exports.delete = async (req, res) => {
   const { id } = req.params;
@@ -34,4 +34,4 @@ exports.delete = async (req, res) => {
   } catch (err) {
     return res.status(500).send("Bericht verwijderen mislukt.");
   }
-}
+};

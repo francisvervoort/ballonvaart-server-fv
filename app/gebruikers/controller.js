@@ -9,13 +9,13 @@ exports.list = async (req, res) => {
   }
 };
 
-exports.create = async (req, res) => {
+exports.create = async(req, res) => {
   const data = req.body;
 
   const bestaandeGebruiker = await Gebruiker.find({email: data.email});
   if (bestaandeGebruiker) {
-    return res.status(400).send(`Gebruiker met e-mailadres ${data.email} bestaat al.`);
-  }
+    return res.status(400).send(`Gebruiker1 met e-mailadres ${data.email} bestaat al.`);
+  } 
 
   const nieuweGebruiker = new Gebruiker(data);
 
@@ -37,7 +37,7 @@ exports.update = async (req, res) => {
 
   const bestaandeGebruiker = await Gebruiker.find({email: data.email});
   if (bestaandeGebruiker) {
-  return res.status(400).send(`Gebruiker met e-mailadres ${data.email} bestaat al.`);
+  return res.status(400).send(`Gebruiker2 met e-mailadres ${data.email}  bestaat al.`);
   }
 
   try {

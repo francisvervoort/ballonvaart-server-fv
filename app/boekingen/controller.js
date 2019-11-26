@@ -7,7 +7,7 @@ exports.list = async (req, res) => {
     } catch (err) {
         return res.status(500).send("Serverfout");
     }
-}
+};
 
 exports.create = async (req, res) => {
     const data = req.body;  //tgv express.json
@@ -19,7 +19,7 @@ exports.create = async (req, res) => {
     } catch (err) {
         return res.status(500).send("Maken van boeking mislukt!");
     }
-}
+};
 
 exports.update = async (req, res) => {
     const {id} = req.params;
@@ -32,10 +32,10 @@ exports.update = async (req, res) => {
     try {
         const boeking = await Boeking.findByIdAndUpdate(id, data, { new: true});
         return res.send(boeking);
-    } catch {
-        return res.status(500).send("Updaten van boeking is mislukt.")
+    } catch (err) {
+        return res.status(500).send("Updaten van boeking is mislukt.");
     }
-}
+};
 
 exports.delete = async (req, res) => {
     const { id } = req.params;
@@ -52,7 +52,7 @@ exports.delete = async (req, res) => {
     try {
         await Boeking.findByIdAndDelete(id);
         return res.send("Boeking verwijderd");
-    } catch {
-        return res.status(500).send("Boeking verwijderen is mislukt.")
+    } catch (err) {
+        return res.status(500).send("Boeking verwijderen is mislukt.");
     }
-}
+};

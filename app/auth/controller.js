@@ -40,4 +40,3 @@ exports.aanmelden = async (req, res) => {
     return res.status(500).send("Serverfout");
   }
 };
-

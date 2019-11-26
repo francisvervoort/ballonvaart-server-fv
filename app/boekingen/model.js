@@ -39,6 +39,14 @@ const boekingSchema = new Schema(
     }
 );
 
+boekingSchema.set("toJSON", {
+    virtuals: true,
+    versionKey: false,
+    transform: function(doc, ret) {
+      delete ret._id;
+    }
+  });
+
 //const boekingModel = mongose.model("Boeking", boekingSchema, boekingen);  boeking (s)!!, dus extra: ,boekingen
 //module.exports = boekingModel; Variabele eerst maken heeft geen enkel nut, dus zie hieronder
 module.exports = mongoose.model("Boeking", boekingSchema, "boekingen");

@@ -7,7 +7,7 @@ const gebruikerSchema = new Schema(
     email: {
       type: String,
       required: true,
-      unique: true
+      unique: true    //niet retroactief
     },
     wachtwoord: {
       type: String,
@@ -24,7 +24,7 @@ const gebruikerSchema = new Schema(
     },
     rol: {
       type: [String],
-      enum: ["admin", "klant"],
+      enum: ["admin", "klant"],   // "pr", "superadmin"]
       lowercase: true,
       default: ["klant"]
     }
@@ -34,19 +34,19 @@ const gebruikerSchema = new Schema(
   }
 );
 
-gebruikerSchema.pre("save", async function (next) {
+gebruikerSchema.pre("save", async function (next) {    // geen => ivm andere betekenins van 'this': bij arrow is this de omringende scoop; niet de fie/blok zelf
   if (!this.isModified("wachtwoord")) {
     return next();
   }
 
-  const hash = await bcrypt.hash(this.wachtwoord, 8);
+  const hash = await bcrypt.hash(this.wachtwoord, 8);  // salt: 8 zorgt dat ww alleen voor deze website kan gebruikt worden.
   if (!hash) {
     throw new Error("Hashen van wachtwoord mislukt!");
   }
 
   this.wachtwoord = hash;
-  next();
-});
+  next();                    //zien of er nog volgende hooks zijn, indien niet de "save" verwerken
+});  
 
 gebruikerSchema.pre("findOneAndUpdate", async function (next) {
   const wachtwoord = this._update.wachtwoord;
@@ -69,7 +69,7 @@ gebruikerSchema.set("toJSON", {
   versionKey: false,
   transform: function(doc, ret) {
     delete ret._id;
-    delete ret.wachtwoord;
+    delete ret.wachtwoord;     // geeft geen fout als er geen wachtwoord is
   }
 });
 
