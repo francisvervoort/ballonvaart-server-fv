@@ -1,37 +1,24 @@
 const Bericht = require("./model");
 
 exports.list = async (req, res) => {
-  try {
     const berichten = await Bericht.find();
     return res.send(berichten);
-  } catch (err) {
-    return res.status(500).send("Serverfout");
-  }
 };
 
 exports.create = async (req, res) => {
   const data = req.body;
   const nieuwBericht = new Bericht(data);
 
-  try {
-    await nieuwBericht.save();
-    return res.send(nieuwBericht);
-  } catch (err) {
-    return res.status(500).send("Toevoegen van bericht mislukt!");
-  }
+  await nieuwBericht.save();
+  return res.send(nieuwBericht);
 };
 
 exports.delete = async (req, res) => {
   const { id } = req.params;
 
   if (!id) {
-    return res.status(400).send("Ongeldig id");
+    return res.badRequest();
   }
-
-  try {
-    await Bericht.findByIdAndDelete(id);
-    return res.send("Bericht verwijderd");
-  } catch (err) {
-    return res.status(500).send("Bericht verwijderen mislukt.");
-  }
+  await Bericht.findByIdAndDelete(id);
+  return res.success("Bericht verwijderd");  //was: return res.send("Bericht verwijderd"  kan ook elders);
 };

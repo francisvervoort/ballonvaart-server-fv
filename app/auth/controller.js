@@ -3,40 +3,43 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 exports.registreren = async (req, res) => {
-  const data = req.body;
-  const nieuwBericht = new Gebruiker(data);
+  const { email, wachtwoord, naam, voornaam } = req.body;
+  const nieuweGebruiker = new Gebruiker({email, wachtwoord, naam, voornaam});
 
-  try {
-    await nieuwBericht.save();
-    return res.send(nieuwBericht);
-  } catch (err) {
-    return res.status(500).send("Toevoegen van bericht mislukt!");
-  }
+  await nieuweGebruiker.save();
+  const accessToken = jwt.sign({email: nieuweGebruiker.email}, process.env.JWT_SECRET, {
+    expiresIn: "1d"
+  });
+
+  return res.send({
+    accessToken,
+    nieuweGebruiker
+  });
 };
 
 exports.aanmelden = async (req, res) => {
   const { email, wachtwoord } = req.body;
 
   if (!email || !wachtwoord) {
-    return res.status(400).send("Ongeldige request.");
+    return res.badRequest();
   }
 
-  try {
-    const gebruiker = await Gebruiker.findOne({email}).select("+wachtwoord");
-    const komtOvereen = bcrypt.compare(wachtwoord, gebruiker.wachtwoord);
-    if (komtOvereen) {
-      // Stuur JWT terug
-      const accessToken = jwt.sign({email: gebruiker.email}, "Tanuki", {
-        expiresIn: "1d"
-      });
-      return res.send({
-        accessToken,
-        gebruiker
-      });
-    } else {
-      return res.status(401).send("Wachtwoord onjuist.");
-    }
-  } catch (err) {
-    return res.status(500).send("Serverfout");
+  const gebruiker = await Gebruiker.findOne({email}).select("+wachtwoord");
+  if (!gebruiker) {
+    return res.badRequest();
+  }
+
+  const komtOvereen = bcrypt.compare(wachtwoord, gebruiker.wachtwoord);
+  if (komtOvereen) {
+    // Stuur JWT terug
+    const accessToken = jwt.sign({email: gebruiker.email}, process.env.JWT_SECRET, {
+      expiresIn: "1d"
+    });
+    return res.send({
+      accessToken,
+      gebruiker
+    });
+  } else {
+    return res.unauthorized();
   }
 };

@@ -1,4 +1,5 @@
 const mongoose = require ("mongoose");
+const logger = require("../utils/logger");
 const connectionString = "mongodb+srv://" +
                             `${process.env.DB_USER}:${process.env.DB_PASSWORD}` +
                             `@cluster0-isjpg.mongodb.net/${process.env.DB_NAME}` +
@@ -10,7 +11,7 @@ mongoose.connect(connectionString, {
     useUnifiedTopology: true,
     useCreateIndex: true
 }).then(() => {
-    console.log("Connectie met MongoDB is gelegd.");
+    logger.info("Connectie met MongoDB is gelegd.");  //was: console.log("Connectie met MongoDB is gelegd."); na lijn 2
 }).catch(err =>{
     console.log(err.stack),
     process.exit(1);

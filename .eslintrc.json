@@ -5,7 +5,7 @@
         "es6": true
     },
     "extends": [
-        "eslint:recommended"  //https://prettier.io/docs/en/integrating-with-linters.html
+        "eslint:recommended"  
     ],
     "plugins": [
         "prettier"
