@@ -4,7 +4,11 @@ const jwt = require("jsonwebtoken");
 
 exports.registreren = async (req, res) => {
   const { email, wachtwoord, naam, voornaam } = req.body;
+  console.log(naam);
+  
   const nieuweGebruiker = new Gebruiker({email, wachtwoord, naam, voornaam});
+  console.log(nieuweGebruiker);
+  
 
   await nieuweGebruiker.save();
   const accessToken = jwt.sign({email: nieuweGebruiker.email}, process.env.JWT_SECRET, {

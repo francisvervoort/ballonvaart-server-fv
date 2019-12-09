@@ -2,13 +2,16 @@ const Gebruiker = require("./model");
 
 exports.list = async (req, res) => {
   const gebruikers = await Gebruiker.find();
+//  console.log(gebruikers);
   return res.send(gebruikers);
 };
+
+
 
 exports.create = async (req, res) => {
   const data = req.body;
       console.log(req.body);
-  const bestaandeGebruiker = await Gebruiker.find({email: data.email});
+  const bestaandeGebruiker = await Gebruiker.find({email: data.email});  
   if (!bestaandeGebruiker) {                                             //voorlopig !bestaandeGeb....
     return res.badRequest(`Gebruiker met e-mailadres ${data.email} bestaat al.`);
   }
@@ -22,14 +25,17 @@ exports.create = async (req, res) => {
 exports.update = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
-      console.log(req.body);
+  //console.log(req.body); 
+  //  console.log(`${data.wachtwoord} ${data.email} ${id}`);
   if (!id || !data) {
     return res.badRequest();
-  }
+  } 
 
   const bestaandeGebruiker = await Gebruiker.find({email: data.email});
-  if (!bestaandeGebruiker) {                                                //voorlopig !bestaandeGeb....
-  return res.badRequest(`Gebruiker met e-mailadres ${data.email} bestaat al.`);
+  console.log(bestaandeGebruiker);
+  
+  if (bestaandeGebruiker) {                                                //voorlopig !bestaandeGeb....
+  return res.badRequest(`Gebruiker met e-mailadres1 ${data.email} bestaat al.`);
   }
 
   const gebruiker = await Gebruiker.findByIdAndUpdate(id, data, {new: true});
